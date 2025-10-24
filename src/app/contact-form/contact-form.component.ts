@@ -32,17 +32,11 @@ export class ContactFormComponent implements OnInit {
       phone: [], // optional
       message: ['', [Validators.required, Validators.minLength(10)]]
     });
-    // PUBLIC MAPBOX TOKEN 
-    this.apiKey = this.config.get('mapboxToken');
   }
 
   ngOnInit() {
-    console.log("Client compiled");
-  }
-
-  toggleSent() {
-    console.log("sent:", this.sent);
-    this.sent = !this.sent;
+       // PUBLIC MAPBOX TOKEN 
+        this.apiKey = this.config.get('mapboxToken');
   }
   allowPhoneCharacters(event: KeyboardEvent): void {
     const allowedRegex = /^[0-9\- ]$/; // single character allowed
