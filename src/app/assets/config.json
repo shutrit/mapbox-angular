@@ -1,0 +1,12 @@
+{
+    "apiBaseUrl": "hostname/service/file",
+    "authEndpoint": "/auth/login",
+    "mapboxToken": "YOUR_MAPBOX_PUBLIC_TOKEN",
+    "map": {
+      "style": "mapbox://styles/mapbox/streets-v12",
+      "logoPath":"CLIENT_LOGO_PATH_PNG_OR_JPG",
+      "defaultZoom": 7,
+      "defaultCenter": [latitude, longtitude]
+    }
+  }
+  
