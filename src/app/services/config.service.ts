@@ -10,7 +10,7 @@ export class ConfigService {
 
   async loadConfig() {
     // console.log("check loading Config json");
-    const configUrl = "../assets/config.json";
+    const configUrl = "../../assets/config.json";
     this.config = await firstValueFrom(this.http.get(configUrl));
   }
 
