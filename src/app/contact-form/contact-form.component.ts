@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { DateService } from '../store/date.service';
+import { MessageService } from '../store/message.service';
+import { ConfigService } from '../config.service';
 export interface eMessage {
 
   name:string;
@@ -22,8 +23,8 @@ export class ContactFormComponent implements OnInit {
   sent = false;
   contactForm: FormGroup;
   userMsg="";
-  apiKey = "pk.eyJ1Ijoic2FnczQwIiwiYSI6ImNtaDBiOWNqbDBlYnV2eHMyYTNqZ2F2MzAifQ.mJDbuzANX3AXdomY4o0MPA";
-  constructor(private fb: FormBuilder, private service:DateService ) {
+  apiKey = "";
+  constructor(private fb: FormBuilder, private service:MessageService, private config: ConfigService ) {
     // build the form group
     this.contactForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
@@ -31,6 +32,8 @@ export class ContactFormComponent implements OnInit {
       phone: [], // optional
       message: ['', [Validators.required, Validators.minLength(10)]]
     });
+    // PUBLIC MAPBOX TOKEN 
+    this.apiKey = this.config.get('mapboxToken');
   }
 
   ngOnInit() {
