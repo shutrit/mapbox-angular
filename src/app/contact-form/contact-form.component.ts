@@ -2,18 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MessageService } from '../store/message.service';
 import { ConfigService } from '../config.service';
-export interface eMessage {
 
+export interface eMessage {
   name:string;
   email:string;
   phone:string;
   message:string;
 }
-
 export interface response {
   status:string;
   name:string;
 }
+
 @Component({
   selector: 'app-contact-form',
   templateUrl: './contact-form.component.html',
@@ -33,7 +33,6 @@ export class ContactFormComponent implements OnInit {
       message: ['', [Validators.required, Validators.minLength(10)]]
     });
   }
-
   ngOnInit() {
        // PUBLIC MAPBOX TOKEN 
         this.apiKey = this.config.get('mapboxToken');
@@ -41,12 +40,10 @@ export class ContactFormComponent implements OnInit {
   allowPhoneCharacters(event: KeyboardEvent): void {
     const allowedRegex = /^[0-9\- ]$/; // single character allowed
     const inputChar = event.key;
-  
-    if (!allowedRegex.test(inputChar)) {
+     if (!allowedRegex.test(inputChar)) {
       event.preventDefault(); // block it
     }
   }
-
   onPastePhone(event: ClipboardEvent): void {
     const pastedText = event.clipboardData?.getData('text') ?? '';
     const allowedPattern = /^[0-9\- ]*$/;
@@ -54,19 +51,17 @@ export class ContactFormComponent implements OnInit {
       event.preventDefault();
     }
   }
-  
   onSubmit() {
     if (this.contactForm.valid) {
       const formValue: eMessage = this.contactForm.value as eMessage;
       this.service.sendMessage(formValue).subscribe((res:response)=>{
-        console.log(res);
         if(res.status==='success') {
           this.userMsg = `Thank you ${res.name}, your ${res.status}`;
-          // fire map event
+          // will cause zoomout of the map 
+          this.sent = true;
           this.contactForm.reset();
         }    
       });
-
     } else {
       this.contactForm.markAllAsTouched();
     }
