@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="row">
+         <div class="col-md-6 col-sm-12 contact">
+            <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+                <div class="form-group">
+                  <label for="name"><strong>Name:<sup>*</sup></strong></label>
+                  <input type="text" class="form-control" id="name" 
+                  [class.is-invalid]="contactForm.get('name')?.touched && contactForm.get('name')?.invalid" 
+                  [class.is-valid]="contactForm.get('name')?.touched && contactForm.get('name')?.valid" 
+                  aria-describedby="nameHelp" formControlName="name">
+                  <div class="error" *ngIf="contactForm.get('name')?.touched && contactForm.get('name')?.invalid">
+                    Name is required
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="email"><strong>Email:<sup>*</sup></strong></label>
+                  <input type="email" class="form-control" id="email"
+                   [class.is-invalid]="contactForm.get('email')?.touched && contactForm.get('email')?.invalid" 
+                   [class.is-valid]="contactForm.get('email')?.touched && contactForm.get('email')?.valid" 
+                   aria-describedby="emailHelp" formControlName="email" >
+                  <div class="error" *ngIf="contactForm.get('email')?.touched && contactForm.get('email')?.invalid">
+                    Enter a valid email.
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="phone"><strong>Phone:</strong></label>
+                  <input type="text" class="form-control" id="phone" aria-describedby="phoneHelp" 
+                  (keypress)="allowPhoneCharacters($event)"
+                  (paste)="onPastePhone($event)"
+                  formControlName="phone">
+                </div>
+                <div class="form-group">
+                <label for="textarea"><strong>Message:</strong><sup>*</sup></label>
+                <textarea class="form-control" id="textarea1" rows="3" 
+                [class.is-invalid]="contactForm.get('message')?.touched && contactForm.get('message')?.invalid" 
+                [class.is-valid]="contactForm.get('message')?.touched && contactForm.get('message')?.valid" 
+                formControlName="message"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary zommer-submit">Submit</button>
+                <button class="btn btm-primary"(click)="toggleSent()">+</button>
+            </form>
+         </div>
+         <div class="col-md-6 col-sm-12 contact-feedback">
+            <div class="banner-image">
+              <app-mapbox apiToken="{{ apiKey }}" [mkZoom]="sent"></app-mapbox>
+            </div> 
+            <div class="contact-msg">
+              <span>{{ userMsg }}</span>
+            </div>
+        </div>
+        <!-- row  -->
+        </div>
+        <!-- container -->
+</div>

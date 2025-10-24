@@ -1,0 +1,20 @@
+@import url("../../../node_modules/mapbox-gl/dist/mapbox-gl.css");
+.form-group sup {
+    color:#ff6600;
+  }
+  .contact-feedback {
+    display: flex;
+    flex-direction: column;
+    .banner-image {
+      height:90%;
+      position: relative;
+    }
+    .contact-msg {
+      height:10%;
+      display: flex;
+      align-items: center;
+    }
+  }
+  .zommer-submit {
+    background-color: #4169E1;
+  }
