@@ -1,26 +1,11 @@
-# ShortTermGoals
+# Contact form  - Reactive forms 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.13.
+This project was generated with [Angular CLI] 18.2.6 and mapbox. Html in contact form is designed for bootstrap 4 but the project itself does not contain the bootstrap library files since its being deployed to an enviroment with bootstrap provided via cdns. 
+See working example at https://www.zommers.nl/contact
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Run yanr start for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
 ## Further help
 
@@ -36,5 +21,3 @@ If you choose to post on Stack Overflow, be sure to include the `mapbox-gl-js` t
 You can also join the [Mapbox Developer Discord Community](https://discord.gg/uMpcC5RmJh) and share your GitHub link there for real-time feedback from other developers.
 
 This is a recommended way to get help when your issue is not covered by the official documentation.
-
-Also a link to the offical DEV community: https://discord.com/invite/uMpcC5RmJh

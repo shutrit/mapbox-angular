@@ -3,6 +3,5 @@
     Latitude: {{ center()[1] | number:'1.4-4' }} |
     Zoom: {{ zoom() | number:'1.2-2' }}
 </div>
-  <button class="reset-button" (click)="resetView()">Reset View</button> <!-- 👈 Angular click binding -->
-
+<button class="reset-button" (click)="resetView()">Reset View</button> 
 <div #mapContainer id="map"></div>
