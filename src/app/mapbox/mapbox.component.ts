@@ -1,11 +1,8 @@
-import { Component,ElementRef,inject,  Input,OnDestroy, OnInit, ViewChild, signal, Renderer2, ChangeDetectionStrategy, SimpleChanges } from '@angular/core';
+import { Component,ElementRef,effect, inject,  Input,OnDestroy, OnInit, ViewChild,  Renderer2, ChangeDetectionStrategy } from '@angular/core';
 import { isPlatformBrowser,  } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
-import { ConfigService } from '../config.service';
-
-// TODO from config.json lat, lang
-const INITIAL_CENTER: [number, number] =  [lat, lang];
-const INITIAL_ZOOM = 13;
+import { SentStore } from "../store/contact.store";
+import { environment } from "../../environments/environment";
 
 @Component({
   selector: 'app-mapbox',
@@ -15,40 +12,36 @@ const INITIAL_ZOOM = 13;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MapboxComponent implements OnInit, OnDestroy{
-  
-  constructor(private config: ConfigService, private render:Renderer2){
-    this.markerImgUrl = config.get('map').logoPath;
-  }
-  markerImgUrl:string;
-  @Input() apiToken:string | undefined;
+  private store = inject(SentStore);
+  private platformId = inject(PLATFORM_ID);
   @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef;
   map: any;
-  private platformId = inject(PLATFORM_ID);
-  private _shouldZoom:any;
-  @Input()
-  set mkZoom(value: boolean) {
-  this._shouldZoom = value;
-  }  
-  get mkZoom():boolean {
-  return this._shouldZoom;
-  }
-  center = signal<[number, number]>(INITIAL_CENTER);
-  zoom = signal<number>(INITIAL_ZOOM);
+  @Input() apiToken:string | undefined;
+  markerImgUrl!:string;
+  center = this.store.initialCenter;
+  zoom = this.store.initialZoom;
+  
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['mkZoom']) {
-      if(changes['mkZoom'].currentValue === true) {
-        this.map.flyTo({
-          center: INITIAL_CENTER,
-          zoom: 4,
-          essential: true 
-        })
-      } 
-    }
+  constructor(private render:Renderer2){
+    effect(()=>{
+          const shouldZoom = this.store.sent(); 
+          if (shouldZoom) {
+            this.map.flyTo({
+              center: this.store.initialCenter(),
+              zoom: this.store.zoomFly(),
+              essential: true 
+          })
+      }
+    });
   }
+
+
+
   async ngOnInit () {
+    this.markerImgUrl = environment.map.logoPath;
     if (isPlatformBrowser(this.platformId)) { // SSR check to ensure this runs in the browser as GL JS requires a browser environment
-        const mapboxgl = (await import('mapbox-gl')).default      
+        const mapboxgl = (await import('mapbox-gl')).default // dynamically import mapbox-gl as the default export
+      
         this.map = new mapboxgl.Map({
           accessToken: this.apiToken,
           container: this.mapContainer.nativeElement,
@@ -63,22 +56,18 @@ export class MapboxComponent implements OnInit, OnDestroy{
         .setPopup(
           new mapboxgl.Popup({ offset: 25 }) // add popups
             .setHTML(
-              `<p>Our location</p>`
+              `<div><p>Helena van Doeverenplantsoen 3,Oude Centrum Den Haag</p></div>`
             ))
         .addTo(this.map);
       });
       this.map.addControl(new mapboxgl.FullscreenControl());
-      this.map.on('move', () => {
-        const newCenter = this.map.getCenter();
-        this.center.set([newCenter.lng, newCenter.lat]);
-        this.zoom.set(this.map.getZoom());
-      });
     }
+
   }
   resetView() {
     this.map.flyTo({
-      center: INITIAL_CENTER,
-      zoom: INITIAL_ZOOM,
+      center: this.store.initialCenter(),
+      zoom: this.store.initialZoom(),
       essential: true 
     });
   }
@@ -87,17 +76,20 @@ export class MapboxComponent implements OnInit, OnDestroy{
       this.map.remove();
     }
   }
+
   createDivMarker() {
+       // Create a DOM element for each marker.
        const el:HTMLElement = this.render.createElement('div');
-       const width = 100;
-       const height = 100;
+       const width = 140;
+       const height = 50;
        el.className = 'marker';
        el.style.width = `${width}px`;
        el.style.height = `${height}px`;
        el.style.backgroundColor = 'transparent';
        el.style.backgroundImage = `url(${this.markerImgUrl})`;
        el.style.backgroundRepeat = "no-repeat";
-       el.style.backgroundSize ="90px 30px";
-       return el;       
+       el.style.backgroundSize ="135px 45px";
+       return el; 
+      
   }
 }

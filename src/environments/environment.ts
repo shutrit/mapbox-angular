@@ -3,7 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: "path/to/api/", 
+  mapboxApiToken:"MAPBOXAPITOKEN",
+  map: {
+    style: "mapbox://styles/mapbox/streets-v12",
+    logoPath:"path/to/file/.png",
+    defaultZoom: 9,
+    defaultCenter: ["lat", "lang"]
+  }
 };
 
 /*

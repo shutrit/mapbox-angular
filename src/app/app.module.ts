@@ -8,11 +8,7 @@ import { MessageService } from './store/message.service';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { MapboxComponent } from './mapbox/mapbox.component';
 import { CommonModule } from '@angular/common';
-import { ConfigService } from './config.service';
 
-export function initConfig(config: ConfigService) {
-  return () => config.loadConfig();
-}
 
 @NgModule({
 
@@ -32,14 +28,7 @@ export function initConfig(config: ConfigService) {
     MapboxComponent
   ],
   exports:[],
-  providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initConfig,
-      deps: [ConfigService],
-      multi: true,
-    },
-    MessageService],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
