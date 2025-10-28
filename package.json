@@ -1,6 +1,7 @@
 {
   "name": "message-app",
   "version": "0.0.0",
+  "type":"module",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -49,10 +50,23 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
     "ts-node": "~10.9.1",
+    "eslint": "9.10.0",
+    "@typescript-eslint/parser": "8.20.0",
+    "@typescript-eslint/eslint-plugin": "8.20.0",
+    "angular-eslint": "20.1.1",
+    "@angular-eslint/eslint-plugin": "20.1.1",
+    "@angular-eslint/builder": "20.1.1",
+    "@angular-eslint/schematics": "^18.1.1",
     "tslib": "^2.3.0",
     "typescript": "5.5.4"
   },
   "resolutions": {
-    "browserslist": "^4.21.5"
+    "browserslist": "^4.21.5",
+    "eslint": "9.10.0",
+    "@typescript-eslint/parser": "8.20.0",
+    "@typescript-eslint/eslint-plugin": "8.20.0",
+    "@angular-devkit/schematics": "^18.1.1",
+    "@angular-devkit/core": "^18.1.1",
+    "@angular-devkit/architect": "^0.1700.9"
   }
 }
