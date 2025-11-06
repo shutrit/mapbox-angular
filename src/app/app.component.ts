@@ -6,18 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'short-term-goals';
-
-  progress = {
-    goal1:0,
-    goal2:1,
-    goal3:0,
-    goal4:0
-  }
-  
-
-  onGoalclicked($event:any) { 
-    console.log("Emiiter:", $event);
-
-  }
+  title = 'contact-form-mapbox';
 }

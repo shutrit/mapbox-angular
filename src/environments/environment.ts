@@ -1,16 +1,14 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
+import { AppSettings }  from "../assets/settings";
 
 export const environment = {
   production: false,
-  apiUrl: "https://www.zommers.nl/service/.php",
-  mapboxApiToken:"pk.eyJ1Ijoic2FnczQwIiwiYSI6ImNtaDBiOWNqbDBlYnV2eHMyYTNqZ2F2MzAifQ.mJDbuzANX3AXdomY4o0MPA",
+  apiUrl: AppSettings.apiUrl,
+  mapboxApiToken:AppSettings.map.apiToken,
   map: {
     style: "mapbox://styles/mapbox/streets-v12",
-    logoPath:"https://zommers.nl/images/Logo20.png",
-    defaultZoom: 9,
-    defaultCenter: [4.30809, 52.07185]
+    logoPath:AppSettings.map.imgPath,
+    defaultZoom: AppSettings.map.defaultZoom,
+    defaultCenter: AppSettings.map.defaultCenter
   }
 };
 

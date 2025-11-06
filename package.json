@@ -9,6 +9,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test --karma-config  karma.conf.cjs",
+    "test-cover":"ng test --karma-config karma.conf.cjs --code-coverage",
     "lint":"yarn eslint --ignore-pattern *.cjs",
     "build:staging": "ng build --configuration=staging",
     "build:prod": "ng build --configuration=production"

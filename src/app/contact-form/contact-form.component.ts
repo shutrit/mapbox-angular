@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { MessageService } from '../store/message.service';
 import { SentStore } from '../store/contact.store';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
+import { MessageService } from '../../services/message.service';
 export interface eMessage {
 
   name:string;
@@ -60,11 +60,9 @@ export class ContactFormComponent implements OnInit {
   onSubmit() {
     if (this.contactForm.valid) {
       const formValue: eMessage = this.contactForm.value as eMessage;
-      this.service.sendMessage(formValue).subscribe((res:response)=>{
-        console.log(res);
-        if(res.status==='success') {
+      this.service.sendMessage(formValue).subscribe((res: response) => {
+        if (res.status === 'success') {
           this.userMsg = `Thank you ${res.name}, your message has been sent.`;
-          // fire map event
           this.store.setSent(true);
           this.contactForm.reset();
         }    
