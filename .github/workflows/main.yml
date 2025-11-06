@@ -16,5 +16,6 @@ jobs:
       - name: Run lint
         run: yarn eslint --ignore-pattern *.cjs
 
-      - name: Run tests
-        run: yarn test
+      - name: Run tests with coverage
+        run: yarn ng test --karma-config karma.conf.cjs --watch=false --browsers=ChromeHeadless --code-coverage
+
