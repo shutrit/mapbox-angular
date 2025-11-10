@@ -86,16 +86,15 @@ export class MapboxComponent implements OnInit, OnDestroy{
   createDivMarker() {
        // Create a DOM element for makrer 
        const el:HTMLElement = this.render.createElement('div');
-       const width = 140;
-       const height = 50;
-       el.className = 'marker';
-       el.style.width = `${width}px`;
-       el.style.height = `${height}px`;
-       el.style.backgroundColor = 'transparent';
-       el.style.backgroundImage = `url(${this.markerImgUrl})`;
-       el.style.backgroundRepeat = "no-repeat";
-       el.style.backgroundSize ="135px 45px";
-       return el; 
-      
+        const width = 140;
+        const height = 50;
+        el.className = 'marker';
+        el.style.width = `${width}px`;
+        el.style.height = `${height}px`;
+        el.style.backgroundColor = 'transparent';
+        el.style.backgroundImage = `url(${this.markerImgUrl})`;
+        el.style.backgroundRepeat = "no-repeat";
+        el.style.backgroundSize ="135px 45px";
+       return el;       
   }
 }

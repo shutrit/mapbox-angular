@@ -23,14 +23,16 @@ export interface response {
 export class ContactFormComponent implements OnInit {
   private store = inject(SentStore);
   contactForm: FormGroup;
-  userMsg="";
+  userMsg = "";
   apiKey = "";
+  errMsg = " This field is required";
+
   constructor(private fb: FormBuilder, private service:MessageService) {
     // build the form group
     this.contactForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]],
-      phone: [], // optional
+      phone: [''],
       message: ['', [Validators.required, Validators.minLength(10)]]
     });
   }
