@@ -1,11 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { ContactFormComponent, response } from './contact-form.component';
+import { ContactFormComponent } from './contact-form.component';
+import { response } from "../models/message.models";
 import { of } from 'rxjs';
-import { SentStore} from '../store/contact.store';
+import { SentStore } from '../store/contact.store';
 import { MessageService } from "../../services/message.service"
 import { ReactiveFormsModule } from '@angular/forms';
+import { phoneValidator } from '../models/validators';
+import { MapboxComponent } from '../mapbox/mapbox.component';
  
 describe('ContactFormComponent', () => {
   let component: ContactFormComponent;
@@ -15,7 +18,7 @@ describe('ContactFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule],
-      declarations: [ContactFormComponent],
+      declarations: [ContactFormComponent, MapboxComponent],
       providers: [MessageService,SentStore,
 
         provideHttpClient(),
@@ -40,33 +43,36 @@ describe('ContactFormComponent', () => {
   it("should have empty values on init", () => {
     expect(component.contactForm.value['email']).toBe("");
     expect(component.contactForm.value['name']).toBe("");
-    expect(component.contactForm.value['message']).toBe("");
-    // phone is null  
+    expect(component.contactForm.value['message']).toBe("");  
   })
   it("should have an api key", () => {
     expect(component.apiKey.length).toBeGreaterThan(5)
   })
-  it("should have a regex block letters and allow numbers", () => {
-    const event = new KeyboardEvent('keydown', { key: 'a' });
-    spyOn(event, 'preventDefault');
-    component.allowPhoneCharacters(event); 
-    expect(event.preventDefault).toHaveBeenCalled();
+  it("should have a phone  valid number format", () => {
+    const validator = phoneValidator(/^(?:\d{2}\s\d{8}|\d{3}\s\d{7})$/);
 
-    const event2 = new KeyboardEvent('keydown', { key: '5' });
-    spyOn(event2, 'preventDefault');
-    expect(event2.preventDefault).not.toHaveBeenCalled();
-  })
-  it("should accept numbers only on pasted text", ()=>{
-    const event = new ClipboardEvent('paste', {
-      clipboardData: new DataTransfer()
-    });
-    event.clipboardData?.setData('text/plain', 'MY TELE 023');
-    spyOn(event, 'preventDefault');
-    component.onPastePhone(event);
-    expect(event.preventDefault).toHaveBeenCalled();
-  })
+    const control = { value: '06 12345678' } as any;
+    const result = validator(control);
+  
+    expect(result).toBeNull();   
+  });
+  it('should set phoneNumberInvalid error when phone is invalid', () => {
+    const phoneControl = component.contactForm.get('phone') as any;
+  
+    phoneControl.setValue('123');   // invalid
+    phoneControl.updateValueAndValidity();
+  
+    expect(phoneControl.hasError('phoneNumberInvalid')).toBeTrue();
+  });
+  it('should NOT set an error when phone is valid', () => {
+    const phoneControl = component.contactForm.get('phone') as any;
+    phoneControl.setValue('06 12345678'); // valid
+    phoneControl.updateValueAndValidity();
+    expect(phoneControl.hasError('phoneNumberInvalid')).toBeFalse();
+    expect(phoneControl.valid).toBeTrue();
+  });
   describe("onSubmit", () => {
-    const userFormDetails = { name: 'Richard', email: "back@mail.com", phone: '020 455 66', message: "Its good to see you guys are working on maps!" };
+    const userFormDetails = { name: 'Richard', email: "back@mail.com", phone: '020 4556688', message: "Its good to see you guys are working on maps!" };
     it("should not call the service if form is invalid", () => {
       expect(component.contactForm.valid).toBe(false);
       spyOn(service, "sendMessage");

@@ -3,18 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { SentStore } from '../store/contact.store';
 import { environment } from '../../environments/environment';
 import { MessageService } from '../../services/message.service';
-export interface eMessage {
+import { eMessage, response } from '../models/message.models';
+import { phoneValidator } from '../models/validators';
 
-  name:string;
-  email:string;
-  phone:string;
-  message:string;
-}
-
-export interface response {
-  status:string;
-  name:string;
-}
 @Component({
   selector: 'app-contact-form',
   templateUrl: './contact-form.component.html',
@@ -28,35 +19,20 @@ export class ContactFormComponent implements OnInit {
   errMsg = " This field is required";
 
   constructor(private fb: FormBuilder, private service:MessageService) {
-    // build the form group
     this.contactForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]],
-      phone: [''],
+      phone: ['',[phoneValidator(/^(?:\d{2}\s\d{8}|\d{3}\s\d{7})$/)]],
       message: ['', [Validators.required, Validators.minLength(10)]]
     });
   }
 
   ngOnInit() {
-       // PUBLIC MAPBOX TOKEN 
-        this.apiKey = environment.mapboxApiToken;
-   
-  }
-  allowPhoneCharacters(event: KeyboardEvent): void {
-    const allowedRegex = /^[0-9\- ]$/; // single character allowed
-    const inputChar = event.key;
-  
-    if (!allowedRegex.test(inputChar)) {
-      event.preventDefault(); // block it
-    }
+        this.apiKey = environment.mapboxApiToken; 
   }
 
-  onPastePhone(event: ClipboardEvent): void {
-    const pastedText = event.clipboardData?.getData('text') ?? '';
-    const allowedPattern = /^[0-9\- ]*$/;
-    if (!allowedPattern.test(pastedText)) {
-      event.preventDefault();
-    }
+  get phone() {
+    return this.contactForm.get('phone');
   }
   
   onSubmit() {
