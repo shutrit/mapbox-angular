@@ -1,4 +1,10 @@
 {
+  
+  "terminal.integrated.env.linux": {
+    "CHROME_BIN": "/snap/bin/chromium"
+  },
+
+
   "eslint.nodePath": "./node_modules",
   "eslint.run": "onType",
   "eslint.options": {
@@ -7,6 +13,6 @@
   },
   "eslint.validate": ["typescript", "html", "javascript"],
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   }
 }
