@@ -1,0 +1,6 @@
+.angular/
+coverage/
+.readme.md
+main.yaml
+./node_moduless
+node_modules

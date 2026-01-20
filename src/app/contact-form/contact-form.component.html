@@ -1,0 +1,68 @@
+<div class="container">
+    <div class="row">
+         <div class="col-md-6 col-sm-12 contact">
+            <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+                <div class="form-group">
+                  <label for="name"><strong>Name:<sup>*</sup></strong></label>
+                  <input type="text" class="form-control" id="name"
+                  [class.is-invalid]="contactForm.get('name')?.touched && contactForm.get('name')?.invalid" 
+                  [class.is-valid]="contactForm.get('name')?.touched && contactForm.get('name')?.valid" 
+                  aria-describedby="nameHelp" formControlName="name">
+                  <div class="error" *ngIf="contactForm.get('name')?.touched && contactForm.get('name')?.invalid">
+                   {{ errMsg }}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="email"><strong>Email:<sup>*</sup></strong></label>
+                  <input type="email" class="form-control" id="email"
+                   [class.is-invalid]="contactForm.get('email')?.touched && contactForm.get('email')?.invalid" 
+                   [class.is-valid]="contactForm.get('email')?.touched && contactForm.get('email')?.valid" 
+                   aria-describedby="emailHelp" formControlName="email" >
+                  <div class="error" *ngIf="contactForm.get('email')?.touched && contactForm.get('email')?.invalid">
+                    {{ errMsg }}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="phone"><strong>Phone:</strong></label>
+                  <input type="text" class="form-control" id="phone" aria-describedby="phoneHelp" 
+            
+                  formControlName="phone">
+                </div>
+                <div class="form-group">
+                <label for="textarea"><strong>Message:</strong><sup>*</sup></label>
+                <textarea class="form-control" id="textarea1" rows="3" 
+                [class.is-invalid]="contactForm.get('message')?.touched && contactForm.get('message')?.invalid" 
+                [class.is-valid]="contactForm.get('message')?.touched && contactForm.get('message')?.valid" 
+                formControlName="message"></textarea>
+                <div class="error" *ngIf="contactForm.get('message')?.touched && contactForm.get('message')?.invalid">
+                  {{ errMsg }}
+                </div>
+                </div>
+                <div class="controls-msg">
+                  <button type="submit" class="btn btn-primary zommer-submit">Submit</button>
+                  <div class="contact-msg">
+                    <span>{{ userMsg }}</span>
+                  </div>
+                </div>            
+            </form>
+         </div>
+         <div class="col-md-6 col-sm-12 contact-feedback">
+            <div class="map-banner">
+              <app-mapbox apiToken="{{ apiKey }}"></app-mapbox>     
+            </div> 
+           
+        </div>
+        <!-- row  -->
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-12"></div>
+          <div class="col-md-6 col-sm-12">
+            <div class="contact-details">
+              <h2>Ready to Grab Some Bytes? Drop Us a Line!</h2>
+              <div><h3>Phone</h3><span>+31 (0)6 1286 3601</span></div>
+              <div><h3>Enquiries</h3><span>hello&#64;zommers.nl</span></div>
+              <div><h3>Address</h3><span>Helena van Doeverenplantsoen 3, 2512 ZB Den Haag</span></div>
+            </div>
+          </div>
+        </div>
+</div>

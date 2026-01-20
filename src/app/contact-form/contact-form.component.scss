@@ -1,0 +1,56 @@
+$blue:#4169E1;
+$error :  #e60000;
+.form-group sup {
+    color:#ff6600;
+  }
+  .contact-feedback {
+    display: flex;
+    flex-direction: column;
+    .map-banner {
+      height:90%;
+      position: relative;
+    }
+  }
+  .zommer-submit {
+    background-color:$blue;
+  }
+  .controls-msg {
+    display: flex;
+    justify-content: space-between;
+    .contact-msg {
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      padding:12px;
+      font-style: italic;
+      color:$blue;
+    }
+  }
+.error { 
+  font-size: 0.750rem;
+  color:$error;
+}
+::ng-deep {
+  .ng-touched.ng-invalid{
+    border-color: $error;
+  }
+}
+.contact-details {
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width:100%;
+  h2 {
+    font-size: 1.2rem;
+  }
+  div {
+    margin-bottom: 10px;
+    h3 {
+      font-size: 1.0rem;
+      color:$blue;
+    }
+    span {
+      font-size: .875rem;
+    }
+  }
+}

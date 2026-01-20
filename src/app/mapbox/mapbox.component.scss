@@ -1,0 +1,41 @@
+@import url('./mapbox.styles.css');
+$blueBtn:#4169E1;
+#map {
+  width: 100%;
+  height: 100%;
+  position:absolute;
+  top:0;
+  left:0;
+  // overflow: hidden;
+}
+.toolbar {
+    background-color: rgb(35 55 75 / 90%);
+    color: #fff;
+    padding: 6px 12px;
+    font-family: monospace;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 12px;
+    border-radius: 4px;
+    opacity: 0;
+  }
+
+
+  .reset-button {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    z-index: 1;
+    padding: 2px 6px;
+    border-radius: 10px;
+    background-color: transparent;
+    color:$blueBtn;
+    cursor: pointer;
+    transition:background-color 0.3s;
+    &:hover {
+      background-color: $blueBtn;
+      color:#fff;
+    }
+  }
