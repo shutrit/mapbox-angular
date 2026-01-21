@@ -11,15 +11,12 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
-      ],
-      providers: [MessageService, provideHttpClient(),provideHttpClientTesting()],
-       declarations: [
+        RouterTestingModule,
         AppComponent,
         ContactFormComponent,
         MapboxComponent
-      
       ],
+      providers: [MessageService, provideHttpClient(),provideHttpClientTesting()],
     }).compileComponents();
   });
 

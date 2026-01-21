@@ -9,7 +9,9 @@ import { MessageService } from "../../services/message.service"
 import { ReactiveFormsModule } from '@angular/forms';
 import { phoneValidator } from '../models/validators';
 import { MapboxComponent } from '../mapbox/mapbox.component';
- 
+import { DecimalPipe } from '@angular/common';
+
+
 describe('ContactFormComponent', () => {
   let component: ContactFormComponent;
   let fixture: ComponentFixture<ContactFormComponent>;
@@ -17,9 +19,9 @@ describe('ContactFormComponent', () => {
   let store: any;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule],
-      declarations: [ContactFormComponent, MapboxComponent],
-      providers: [MessageService,SentStore,
+      imports: [ReactiveFormsModule, ContactFormComponent, MapboxComponent],
+    
+      providers: [MessageService,SentStore, DecimalPipe ,
 
         provideHttpClient(),
         provideHttpClientTesting()]

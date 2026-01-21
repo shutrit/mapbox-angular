@@ -1,5 +1,5 @@
 import { Component,ElementRef,effect, inject,  Input,OnDestroy, OnInit, ViewChild,  Renderer2, ChangeDetectionStrategy } from '@angular/core';
-import { isPlatformBrowser,  } from '@angular/common';
+import { DecimalPipe, isPlatformBrowser,  } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
 import { SentStore } from "../store/contact.store";
 import  mapboxgl  from "mapbox-gl"
@@ -8,7 +8,8 @@ import { MapboxService } from 'src/services/mapbox.service';
 
 @Component({
   selector: 'app-mapbox',
-  standalone:false,
+  standalone:true,
+  imports:[ DecimalPipe ],
   templateUrl: './mapbox.component.html',
   styleUrls: ['./mapbox.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

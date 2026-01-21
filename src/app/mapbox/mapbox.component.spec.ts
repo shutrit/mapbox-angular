@@ -44,7 +44,7 @@ describe('MapboxComponent', () => {
     await TestBed.configureTestingModule({
       providers: [SentStore, { provide: MapboxService, useClass: MapboxServiceMock }
 ],   
-      declarations: [ MapboxComponent ]
+      imports: [ MapboxComponent ]
     })
     .compileComponents();
 

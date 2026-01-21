@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders,HttpParams } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { eMessage } from '../app/models/message.models';
 import { environment } from '../environments/environment';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
 
@@ -10,7 +10,9 @@ const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlenc
 
 export class MessageService {
     apiUrl;
-    constructor(private http:HttpClient) {
+     private http = inject(HttpClient);
+    constructor() {
+        
          this.apiUrl = environment.apiUrl
     }
     sendMessage(msg:eMessage):Observable<any> {

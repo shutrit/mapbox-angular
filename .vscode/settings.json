@@ -3,8 +3,6 @@
   "terminal.integrated.env.linux": {
     "CHROME_BIN": "/snap/bin/chromium"
   },
-
-
   "eslint.nodePath": "./node_modules",
   "eslint.run": "onType",
   "eslint.options": {

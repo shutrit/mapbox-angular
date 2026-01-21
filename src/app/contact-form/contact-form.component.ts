@@ -1,14 +1,17 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { SentStore } from '../store/contact.store';
 import { environment } from '../../environments/environment';
 import { MessageService } from '../../services/message.service';
 import { eMessage, response } from '../models/message.models';
 import { phoneValidator } from '../models/validators';
+import { CommonModule, DecimalPipe } from '@angular/common';
+import { MapboxComponent } from '../mapbox/mapbox.component';
 
 @Component({
   selector: 'app-contact-form',
   templateUrl: './contact-form.component.html',
+  imports:[CommonModule, ReactiveFormsModule, MapboxComponent],
   styleUrls: ['./contact-form.component.scss']
 })
 export class ContactFormComponent implements OnInit {
