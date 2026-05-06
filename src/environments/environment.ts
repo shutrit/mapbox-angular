@@ -12,6 +12,12 @@ export const environment = {
     defaultCenter: AppSettings.map.defaultCenter,
     markerPopupText: AppSettings.map.markerPopupText,
   },
+  contact: {
+    slogan: AppSettings.contact.slogan,
+    phone: AppSettings.contact.phone,
+    email: AppSettings.contact.email,
+    address: AppSettings.contact.address,
+  },
 };
 
 /*

@@ -6,3 +6,4 @@ main.yaml
 node_moddules 
 node_modules
 settings.json
+.src/environments/app-settings.ts

@@ -6,22 +6,24 @@ import tsParser from "@typescript-eslint/parser";
 export default [
   js.configs.recommended,
   {
-
-    
+    ignores: ["scripts/generate-env.cjs"],
+  },
+  {
     files: ["**/*.ts", "**/*.js"],
+
     languageOptions: {
-      parser:tsParser
+      parser: tsParser,
     },
     plugins: {
       "@typescript-eslint": tsPlugin,
-      "@angular-eslint": angularPlugin
+      "@angular-eslint": angularPlugin,
     },
 
     rules: {
-      "no-useless-escape":"off",
-      "no-undef":"warn",
+      "no-useless-escape": "off",
+      "no-undef": "warn",
       "no-unused-vars": "warn",
-      "no-console": "off"
-    }
-  }
+      "no-console": "off",
+    },
+  },
 ];

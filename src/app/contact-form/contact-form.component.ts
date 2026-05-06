@@ -16,6 +16,10 @@ export class ContactFormComponent implements OnInit {
   contactForm!: FormGroup;
   userMsg = "";
   errMsg = " This field is required";
+  slogan = environment.contact.slogan;
+  email = environment.contact.email;
+  phoneNumber = environment.contact.phone;
+  address = environment.map.markerPopupText;
 
   constructor(
     private fb: FormBuilder,
