@@ -1,0 +1,15 @@
+{
+  "eslint.nodePath": "./node_modules",
+  "eslint.run": "onType",
+  "eslint.options": {
+    "experimentalDecorators": true,
+    "configFile": "eslint.config.js"
+  },
+  "eslint.validate": ["typescript", "html", "javascript"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true
+}

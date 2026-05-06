@@ -1,0 +1,8 @@
+.angular/
+coverage/
+.readme.md
+./src/assets/settings.ts
+main.yaml
+node_moddules 
+node_modules
+settings.json

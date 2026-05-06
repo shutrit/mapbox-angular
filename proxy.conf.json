@@ -1,0 +1,11 @@
+{
+    "/**": {
+      "target": "YOURhostAPI",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug"
+
+    }
+  }
+
+  
