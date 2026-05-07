@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-
+const dotenv = require("dotenv");
 const projectRoot = process.cwd();
 
 const settingsPath = path.join(projectRoot, "settings.json");
@@ -22,3 +22,7 @@ export const AppSettings = ${JSON.stringify(settings, null, 2)} as const;
 fs.writeFileSync(outputPath, content);
 
 console.log("✅ AppSettings generated at:", outputPath);
+
+// Without it, process.env only contains system-level environment variables.
+//  On GitHub CI you don't need it because the secrets are already
+//  in process.env — dotenv.config() simply finds no .env file and silently does nothing.
