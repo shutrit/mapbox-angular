@@ -1,12 +1,7 @@
-import { AppSettings }  from "../assets/settings";
-export const environment = {
+import { AppConfig } from "../app/models/message.models";
+import { environment as baseEnv } from "./environment";
+
+export const environment: any = {
+  ...baseEnv,
   production: true,
-  apiUrl: AppSettings.apiUrl,
-  mapboxApiToken:AppSettings.map.apiToken,
-  map: {
-    style: "mapbox://styles/mapbox/streets-v12",
-    logoPath:AppSettings.map.imgPath,
-    defaultZoom: AppSettings.map.defaultZoom,
-    defaultCenter: AppSettings.map.defaultCenter
-  }
 };

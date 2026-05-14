@@ -2,11 +2,12 @@ import js from "@eslint/js";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
 import angularPlugin from "@angular-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
+import vitest from "eslint-plugin-vitest";
 
 export default [
   js.configs.recommended,
   {
-    ignores: ["scripts/generate-env.cjs", "scripts/set-env.cjs"],
+    ignores: ["scripts/set-env.cjs", ".angular"],
   },
   {
     files: ["**/*.ts", "**/*.js"],
@@ -36,6 +37,14 @@ export default [
       "no-undef": "warn",
       "no-unused-vars": "warn",
       "no-console": "off",
+      "no-prototype-builtins": "off",
+    },
+  },
+  {
+    files: ["**/*.spec.ts", "**/*.test.ts"],
+    plugins: { vitest },
+    rules: {
+      ...vitest.configs.recommended.rules,
     },
   },
 ];

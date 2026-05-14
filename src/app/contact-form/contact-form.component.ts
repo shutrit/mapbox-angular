@@ -1,18 +1,27 @@
 import { Component, OnInit, inject } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from "@angular/forms";
 import { SentStore } from "../store/contact.store";
 import { environment } from "../../environments/environment";
 import { MessageService } from "../../services/message.service";
 import { eMessage, response } from "../models/message.models";
 import { EMAIL_PATTERN, phoneValidator } from "../models/validators";
+import { CommonModule } from "@angular/common";
+import { MapboxComponent } from "../mapbox/mapbox.component";
 
 @Component({
   selector: "app-contact-form",
   templateUrl: "./contact-form.component.html",
-  styleUrls: ["./contact-form.component.scss"],
+  imports: [ReactiveFormsModule, CommonModule, MapboxComponent],
+  styleUrl: "./contact-form.component.scss",
+  standalone: true,
 })
 export class ContactFormComponent implements OnInit {
-  private store = inject(SentStore);
+  private store: any = inject(SentStore);
   contactForm!: FormGroup;
   userMsg = "";
   errMsg = " This field is required";
@@ -40,7 +49,7 @@ export class ContactFormComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.contactForm?.valid) {
+    if (this.contactForm?.valid === true) {
       const formValue: eMessage = this.contactForm.value as eMessage;
       this.service.sendMessage(formValue).subscribe((res: response) => {
         if (res.status === "success") {

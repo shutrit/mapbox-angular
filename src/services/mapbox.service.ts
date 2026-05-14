@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import mapboxgl from "mapbox-gl";
-import { environment } from "src/environments/environment";
+import { environment } from "../environments/environment";
 
 @Injectable({ providedIn: "root" })
 export class MapboxService {

@@ -1,19 +1,20 @@
+import { AppConfig } from "../app/models/app.config.model";
 
-export const environment = {
+export const environment: AppConfig = {
   production: false,
-  apiUrl: 'https://www.zommers.nl/service/index.php',
-  mapboxApiToken: 'pk.eyJ1Ijoic2FnczQwIiwiYSI6ImNtaDBiOWNqbDBlYnV2eHMyYTNqZ2F2MzAifQ.mJDbuzANX3AXdomY4o0MPA',
+  apiUrl: "",
+  mapboxApiToken: "",
   map: {
-    style: 'mapbox://styles/mapbox/streets-v12',
-    logoPath: 'https://zommers.nl/images/Logo20.png',
+    style: "",
+    logoPath: "",
     defaultZoom: 9,
     defaultCenter: [4.30809, 52.07185],
-    markerPopupText: 'Helena van Doeverenplantsoen 3, Den Haag',
+    markerPopupText: "",
   },
   contact: {
-    slogan: 'Ready to Grab Some Bytes? Drop Us a Line!',
-    phone: '06 12863601',
-    email: 'hello@zommers.nl',
-    address: 'Helena van Doeverenplantsoen 3, Den Haag',
+    slogan: "",
+    phone: "",
+    email: "",
+    address: "",
   },
 };

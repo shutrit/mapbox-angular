@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { MapboxComponent } from "./mapbox.component";
 import { By } from "@angular/platform-browser";
 import { SentStore } from "../store/contact.store";
-import { MapboxService } from "src/services/mapbox.service";
+import { MapboxService } from "../../services/mapbox.service";
 
 export class MapBoxGlMock {
   accessToken = "AG31410FYI91";
@@ -32,11 +32,8 @@ export class MapBoxGlMock {
 }
 
 class MapboxServiceMock {
-  createMap = jasmine
-    .createSpy("createMap")
-    .and.returnValue(new MapBoxGlMock());
+  createMap = vi.fn().mockReturnValue(new MapBoxGlMock());
 }
-
 describe("MapboxComponent", () => {
   let component: MapboxComponent;
   let fixture: ComponentFixture<MapboxComponent>;
@@ -47,12 +44,11 @@ describe("MapboxComponent", () => {
         SentStore,
         { provide: MapboxService, useClass: MapboxServiceMock },
       ],
-      declarations: [MapboxComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MapboxComponent);
     component = fixture.componentInstance;
-    spyOn(component, "addMarker").and.callFake(() => {});
+    vi.spyOn(component, "addMarker").mockImplementation(() => {});
     fixture.detectChanges();
     store = TestBed.inject(SentStore);
   });
@@ -66,8 +62,8 @@ describe("MapboxComponent", () => {
     ).nativeElement;
     expect(button.textContent).toContain("reset");
   });
-  xit("should call mapbox flyTo method when sent", () => {
-    spyOn(MapBoxGlMock.prototype, "flyTo").and.callThrough();
+  it.skip("should call mapbox flyTo method when sent", () => {
+    vi.spyOn(MapBoxGlMock.prototype, "flyTo");
     fixture = TestBed.createComponent(MapboxComponent);
     expect(store.sent()).toBe(false);
     component = fixture.componentInstance;

@@ -10,17 +10,18 @@ import {
   Renderer2,
   ChangeDetectionStrategy,
 } from "@angular/core";
-import { isPlatformBrowser } from "@angular/common";
+import { DecimalPipe, isPlatformBrowser } from "@angular/common";
 import { PLATFORM_ID } from "@angular/core";
 import { SentStore } from "../store/contact.store";
-import mapboxgl from "mapbox-gl";
 import { environment } from "../../environments/environment";
-import { MapboxService } from "src/services/mapbox.service";
+import mapboxgl from "mapbox-gl";
+import { MapboxService } from "../../services/mapbox.service";
 
 @Component({
   selector: "app-mapbox",
-  standalone: false,
+  standalone: true,
   templateUrl: "./mapbox.component.html",
+  imports: [DecimalPipe], //
   styleUrls: ["./mapbox.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -87,7 +88,6 @@ export class MapboxComponent implements OnInit, OnDestroy {
   }
 
   createDivMarker() {
-    // Create a DOM element for makrer
     const el: HTMLElement = this.render.createElement("div");
     const width = 140;
     const height = 50;
