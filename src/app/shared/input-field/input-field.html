@@ -1,0 +1,5 @@
+<label>{{ label() }}:</label>
+<ng-content></ng-content>
+@for(err of fieldErrors(); track err.kind) { @if(fieldState()?.dirty()) {
+<div class="error">{{ err.message }}</div>
+} }

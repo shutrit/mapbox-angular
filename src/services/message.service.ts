@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable, Signal } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { eMessage, response } from "../app/models/message.models";
@@ -10,8 +10,9 @@ const headers = new HttpHeaders({
 
 @Injectable({ providedIn: "root" })
 export class MessageService {
-  constructor(private http: HttpClient) {}
   private readonly apiUrl = environment.apiUrl;
+  private readonly http = inject(HttpClient);
+
   sendMessage(msg: eMessage): Observable<response> {
     const body = new HttpParams()
       .set("email", msg.email)

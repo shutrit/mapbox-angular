@@ -28,4 +28,3 @@ console.log(
   fs.realpathSync(".") + "/src/environments/environment.ts",
 );
 fs.writeFileSync("./src/environments/environment.ts", environment);
-console.log("environment.ts generated successfully");

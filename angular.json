@@ -90,6 +90,7 @@
           "builder": "@angular-devkit/build-angular:vitest",
           "options": {
             "configFile": "vitest.config.ts",
+            "reporters": ["verbose"],
             "runner": "vitest",
             "runnerConfig": "vitest.config.ts"
           }

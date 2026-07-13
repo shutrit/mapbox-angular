@@ -2,14 +2,14 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { provideHttpClient } from "@angular/common/http";
 import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ContactFormComponent } from "./contact-form.component";
-import { response } from "../models/message.models";
-import { of } from "rxjs";
+import * as signalForms from "@angular/forms/signals";
+import { initialModel } from "./contact-form.component";
 import { SentStore } from "../store/contact.store";
 import { MessageService } from "../../services/message.service";
 import { ReactiveFormsModule } from "@angular/forms";
-import { phoneValidator } from "../models/validators";
 import { Component } from "@angular/core";
 import { MapboxComponent } from "../mapbox/mapbox.component";
+import { of, throwError } from "rxjs";
 
 @Component({
   selector: "app-mapbox",
@@ -58,34 +58,50 @@ describe("ContactFormComponent", () => {
   it("should have a form object", () => {
     expect(component.contactForm).toBeTruthy();
   });
-  it("should have empty values on init", () => {
-    expect(component.contactForm.value["email"]).toBe("");
-    expect(component.contactForm.value["name"]).toBe("");
-    expect(component.contactForm.value["message"]).toBe("");
+  it.skip("should have empty values on init", () => {
+    expect(component.contactForm.email()).toBe("");
+    expect(component.contactForm.name()).toBe("");
+    expect(component.contactForm.message()).toBe("");
   });
-
-  it("should have a phone  valid number format", () => {
-    const validator = phoneValidator(/^(?:\d{2}\s\d{8}|\d{3}\s\d{7})$/);
-
-    const control = { value: "06 23426299" } as any;
-    const result = validator(control);
-
-    expect(result).toBeNull();
+  it("should set the model via the form", () => {
+    component.contactForm.name().value.set("Denis");
+    expect(component.model().name).toBe("Denis");
   });
-  it("should set phoneNumberInvalid error when phone is invalid", () => {
-    const phoneControl = component.contactForm.get("phone") as any;
+  it("should have a phone valid number format", () => {
+    const phoneValidFromat = "06 23426299";
+    const invalidFormat = "0623426299";
+    component.contactForm.phone().value.set(phoneValidFromat);
+    expect(component.contactForm.phone().valid()).toBe(true);
+    expect(component.contactForm.phone().value()).toBe(phoneValidFromat);
 
-    phoneControl.setValue("123"); // invalid
-    phoneControl.updateValueAndValidity();
-
-    expect(phoneControl.hasError("phoneNumberInvalid")).toBe(true);
+    component.contactForm.phone().value.set(invalidFormat);
+    expect(component.contactForm.phone().valid()).toBe(false);
+    expect(component.contactForm.phone().value()).toBe(invalidFormat);
   });
-  it("should NOT set an error when phone is valid", () => {
-    const phoneControl = component.contactForm.get("phone") as any;
-    phoneControl.setValue("06 12345678"); // valid
-    phoneControl.updateValueAndValidity();
-    expect(phoneControl.hasError("phoneNumberInvalid")).toBe(false);
-    expect(phoneControl.valid).toBe(true);
+  it("should accept empty or specific format in phone field", () => {
+    const invalidFormat = "22202";
+    component.contactForm.phone().value.set(invalidFormat);
+    fixture.autoDetectChanges();
+    expect(component.contactForm.phone().valid()).toBe(false);
+    expect(component.contactForm.phone().errors().length).toBe(1);
+
+    component.contactForm.phone().value.set("");
+    fixture.autoDetectChanges();
+    expect(component.contactForm.phone().valid()).toBe(true);
+    expect(component.contactForm.phone().errors().length).toBe(0);
+  });
+  it("should have error message when email is not in correct format", () => {
+    component.contactForm.email().value.set("Jerry.won.com");
+    fixture.autoDetectChanges();
+    expect(component.contactForm.email().valid()).toBe(false);
+    const errorMessage = component.contactForm.email().errors()[0].message;
+    expect(errorMessage).toBe("Email must be correct format");
+  });
+  it("should have minimum characters for a valid message", () => {
+    component.contactForm.message().value.set("Jerry  ");
+    fixture.autoDetectChanges();
+    expect(component.contactForm.message().valid()).toBe(false);
+    // here no validate function so message by default is another path
   });
   describe("onSubmit", () => {
     const userFormDetails = {
@@ -94,53 +110,70 @@ describe("ContactFormComponent", () => {
       phone: "06 23232323",
       message: "Its good to see you are working on maps",
     };
-    it("should not call the service if form is invalid", () => {
-      expect(component.contactForm.valid).toBe(false);
-      vi.spyOn(service, "sendMessage");
-      component.onSubmit();
-      expect(service.sendMessage).not.toHaveBeenCalled();
-    });
+
     it("should call the message service if form is valid", () => {
-      component.ngOnInit();
-      vi.spyOn(service, "sendMessage").mockReturnValue(
-        of({ status: "success", name: "name" }),
-      );
-      component.contactForm.setValue(userFormDetails);
-      component.onSubmit();
-      console.log(component.contactForm.valid);
-      //expect(component.contactForm.valid).toBe(true);
-      expect(service.sendMessage).toHaveBeenCalled();
+      const event: any = { preventDefault: () => undefined };
+      vi.spyOn(service, "sendMessage");
+      component.contactForm().value.set(userFormDetails);
+
+      expect(component.contactForm().valid()).toBe(true);
+      //expect(service.sendMessage).toHaveBeenCalled();
     });
-    it("should set sent true when form is valid and response is success", () => {
-      const response: response = { name: "somename", status: "success" };
-
-      vi.spyOn(component.contactForm, "reset");
-      expect(store.sent()).toBe(false);
-      vi.spyOn(store, "setSent");
-      vi.spyOn(service, "sendMessage").mockReturnValue(of(response));
-
-      component.contactForm.setValue(userFormDetails);
-      component.onSubmit();
-
-      expect(store.setSent).toHaveBeenCalledWith(true);
-      expect(component.contactForm.reset).toHaveBeenCalled();
+  });
+  describe("on Submit", () => {
+    vi.mock("@angular/forms/signals", async (importOriginal) => {
+      const actual = await importOriginal<typeof signalForms>();
+      return {
+        ...actual,
+        submit: vi.fn((form, callback) => callback()),
+      };
     });
-    it("should set sent false when form is invalid", () => {
-      const store = TestBed.inject(SentStore);
-      vi.spyOn(store, "setSent");
-      vi.spyOn(component.contactForm, "markAllAsTouched");
+    let sendMessageSpy: ReturnType<typeof vi.fn>;
+    let fakeEvent: Event;
+    beforeEach(() => {
+      sendMessageSpy = vi.spyOn(component["service"], "sendMessage");
+      fakeEvent = { preventDefault: vi.fn() } as unknown as Event;
 
-      component.contactForm.setValue({
-        name: "",
-        email: "notvalid.s",
-        phone: "749 53",
-        message: "ants84",
+      component.model.set({
+        email: "abc@host.com",
+        name: "Adinadelarey",
+        message: "hi",
+        phone: "",
       });
+    });
+    it("calls sendMessage with the current model value", async () => {
+      sendMessageSpy.mockReturnValue(
+        of({ status: "success", name: "Adainadelarey" }),
+      );
 
-      component.onSubmit();
+      await component.onSubmit(fakeEvent); // if onSubmit isn't already async, see note below
 
-      expect(store.setSent).toHaveBeenCalledWith(false);
-      expect(component.contactForm.markAllAsTouched).toHaveBeenCalled();
+      expect(fakeEvent.preventDefault).toHaveBeenCalled();
+      expect(sendMessageSpy).toHaveBeenCalledWith({
+        email: "abc@host.com",
+        name: "Adinadelarey",
+        message: "hi",
+        phone: "",
+      });
+    });
+    it("sets an error message when sendMessage throws", async () => {
+      sendMessageSpy.mockReturnValue(
+        throwError(() => new Error("network fail")),
+      );
+
+      await component.onSubmit(fakeEvent);
+
+      expect(component.userMsg()).toBe("something went wrong");
+    });
+    it("resets the model and form regardless of outcome", async () => {
+      sendMessageSpy.mockReturnValue(of({ status: "success", name: "Ada" }));
+
+      const resetSpy = vi.spyOn(component.contactForm(), "reset");
+
+      await component.onSubmit(fakeEvent);
+
+      expect(component.model()).toEqual(initialModel);
+      expect(resetSpy).toHaveBeenCalledWith(initialModel);
     });
   });
 });

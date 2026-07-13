@@ -1,56 +1,60 @@
-$blue:#4169E1;
-$error :  #e60000;
+$blue: #4169e1;
+
+$error: #e60000;
+.invalid {
+  border: 1px solid $error;
+}
 .form-group sup {
-    color:#ff6600;
+  color: #ff6600;
+}
+.contact-feedback {
+  display: flex;
+  flex-direction: column;
+  .map-banner {
+    height: 90%;
+    position: relative;
   }
-  .contact-feedback {
+}
+.zommer-submit {
+  background-color: $blue;
+}
+.controls-msg {
+  display: flex;
+  justify-content: space-between;
+  .contact-msg {
     display: flex;
-    flex-direction: column;
-    .map-banner {
-      height:90%;
-      position: relative;
-    }
+    align-items: center;
+    font-size: 16px;
+    padding: 12px;
+    font-style: italic;
+    color: $blue;
   }
-  .zommer-submit {
-    background-color:$blue;
-  }
-  .controls-msg {
-    display: flex;
-    justify-content: space-between;
-    .contact-msg {
-      display: flex;
-      align-items: center;
-      font-size: 16px;
-      padding:12px;
-      font-style: italic;
-      color:$blue;
-    }
-  }
-.error { 
-  font-size: 0.750rem;
-  color:$error;
+}
+.error {
+  font-size: 0.75rem;
+  color: $error;
 }
 ::ng-deep {
-  .ng-touched.ng-invalid{
+  .ng-touched.ng-invalid {
     border-color: $error;
   }
 }
 .contact-details {
-  display:flex;
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width:100%;
+  width: 100%;
   h2 {
     font-size: 1.2rem;
   }
   div {
     margin-bottom: 10px;
     h3 {
-      font-size: 1.0rem;
-      color:$blue;
+      font-size: 1rem;
+      color: $blue;
     }
     span {
-      font-size: .875rem;
+      font-size: 0.875rem;
     }
   }
 }
